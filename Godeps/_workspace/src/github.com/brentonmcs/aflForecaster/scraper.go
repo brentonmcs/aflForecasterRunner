@@ -28,6 +28,12 @@ func ScrapePages() {
 		fmt.Printf("Finished scraping year: %d round :%d", aR.year, aR.round)
 	}
 
+	for year := 2009; year < 2016; year++ {
+		for round := 1; round < 23; round++ {
+			scrapeResults(fmt.Sprintf(baseUri, year, round), round, year)
+		}
+	}
+
 }
 
 func scapeSportsBet() {

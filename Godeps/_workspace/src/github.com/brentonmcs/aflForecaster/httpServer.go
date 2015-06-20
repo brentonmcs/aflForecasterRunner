@@ -38,6 +38,12 @@ func currentPrices(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func updateStats(w http.ResponseWriter, r *http.Request) {
+	AddHeaders(w)
+	sc
+	io.WriteString(w, string("Done"))
+}
+
 func determineListenAddress() (string, error) {
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -51,6 +57,7 @@ func StartHttpServer() {
 	http.HandleFunc("/currentRound", currentRound)
 	http.HandleFunc("/currentRoundStats", currentRoundStats)
 	http.HandleFunc("/prices", currentPrices)
+	http.HandleFunc("/updateStats", updateStats)
 
 	addr, err := determineListenAddress()
 	if err != nil {

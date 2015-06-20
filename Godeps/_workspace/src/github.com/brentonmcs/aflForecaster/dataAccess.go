@@ -3,7 +3,6 @@ package AflForecaster
 import (
 	"aflForecasterRunner/Godeps/_workspace/src/gopkg.in/mgo.v2"
 	"aflForecasterRunner/Godeps/_workspace/src/gopkg.in/mgo.v2/bson"
-	"fmt"
 	"log"
 	"os"
 	"time"
@@ -34,7 +33,7 @@ func AddForecast(forecast *ForecastModel) {
 		log.Fatal(err)
 	}
 
-	fmt.Println(forecast)
+	log.Println(forecast)
 }
 
 func addPriceRecord(matchRecord *MatchPrices) {
@@ -47,7 +46,7 @@ func addPriceRecord(matchRecord *MatchPrices) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(matchRecord)
+	log.Println(matchRecord)
 }
 
 func GetCurrentRoundDetails() []ForecastModel {
@@ -185,7 +184,6 @@ func getCurrentRoundPrices() []MatchPrices {
 	duration := time.Duration(time.Duration(daysTilSunday*24) * time.Hour)
 	currentDate := time.Now().Add(duration)
 
-	fmt.Println(currentDate)
 	session := connect()
 	defer session.Close()
 
