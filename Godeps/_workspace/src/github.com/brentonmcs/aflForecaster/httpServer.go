@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"log"
 	"encoding/json"
+	"os"
+	"fmt"
 )
 
 func AddHeaders(w http.ResponseWriter) {
@@ -22,8 +24,40 @@ func currentRound(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, string(result))
 }
 
+func currentRoundStats(w http.ResponseWriter, r *http.Request) {
+	AddHeaders(w)
+	result, _ := json.Marshal(GenerateCurrentRoundStats())
+	io.WriteString(w, string(result))
+
+}
+
+func currentPrices(w http.ResponseWriter, r *http.Request) {
+	AddHeaders(w)
+	result, _ := json.Marshal(getCurrentRoundPrices())
+	io.WriteString(w, string(result))
+
+}
+
+func determineListenAddress() (string, error) {
+	port := os.Getenv("PORT")
+	if port == "" {
+		return "", fmt.Errorf("$PORT not set")
+	}
+	return ":" + port, nil
+}
+
 func StartHttpServer() {
 	http.HandleFunc("/stats", StatsResult)
 	http.HandleFunc("/currentRound", currentRound)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	http.HandleFunc("/currentRoundStats", currentRoundStats)
+	http.HandleFunc("/prices", currentPrices)
+
+	addr, err := determineListenAddress()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err := http.ListenAndServe(addr, nil); err != nil {
+		panic(err)
+	}
 }

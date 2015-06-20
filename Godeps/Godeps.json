@@ -6,26 +6,8 @@
 	],
 	"Deps": [
 		{
-			"ImportPath": "github.com/PuerkitoBio/goquery",
-			"Comment": "v0.3.2-78-g60ec77b",
-			"Rev": "60ec77b0032de8548a0d67f76154458850264a99"
-		},
-		{
-			"ImportPath": "github.com/andybalholm/cascadia",
-			"Rev": "6122e68c2642b7b75c538a63b15168c6c80fb757"
-		},
-		{
 			"ImportPath": "github.com/brentonmcs/aflForecaster",
-			"Rev": "7b055cd922a29b30a9a5ad5de05c2dd493cc2752"
-		},
-		{
-			"ImportPath": "golang.org/x/net/html",
-			"Rev": "84afb0af0050ae286aa9ced0c29383c2a866a925"
-		},
-		{
-			"ImportPath": "gopkg.in/mgo.v2",
-			"Comment": "r2015.06.03-3-g3569c88",
-			"Rev": "3569c88678d88179dcbd68d02ab081cbca3cd4d0"
+			"Rev": "87c0f14d1de83081129f54ffba9120c1a7fc4454"
 		}
 	]
 }

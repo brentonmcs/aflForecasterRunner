@@ -1,12 +1,14 @@
 package AflForecaster
 
+import "time"
+
 type AggregatePoints struct {
-	Point      int `bson:"_id" json:"_id"`
-	WonCount int `bson:"wonCount" json:"wonCount"`
-	BetTotal int `bson:"betTotal" json:"betTotal"`
-	WonOver40Count int `bson:"wonOver40Count" json:"wonOver40Count"`
-	WonUnder40Count int `bson:"wonUnder40Count" json:"wonUnder40Count"`
-	LoseOver40Count int `bson:"loseOver40Count" json:"loseOver40Count"`
+	Point            int `bson:"_id" json:"_id"`
+	WonCount         int `bson:"wonCount" json:"wonCount"`
+	BetTotal         int `bson:"betTotal" json:"betTotal"`
+	WonOver40Count   int `bson:"wonOver40Count" json:"wonOver40Count"`
+	WonUnder40Count  int `bson:"wonUnder40Count" json:"wonUnder40Count"`
+	LoseOver40Count  int `bson:"loseOver40Count" json:"loseOver40Count"`
 	LoseUnder40Count int `bson:"loseUnder40Count" json:"loseUnder40Count"`
 }
 
@@ -31,18 +33,51 @@ type ResultModel struct {
 }
 
 type StatsModel struct {
-	PointLow              int
-	PointHigh             int
-	BetCount              int
-	WonCount              int
-	Won40Plus             int
-	WonUnder40            int
-	Lose40Plus            int
-	LoseUnder40           int
-	WinPercentage         float32
-	LosePercentage        float32
-	WinOver40Percentage   float32
-	WinUnder40Percentage  float32
-	LoseOver40Percentage  float32
-	LoseUnder40Percentage float32
+	PointLow  int
+	PointHigh int
+	BetCount  int
+	WinStat   Stat
+	LoseStat  Stat
+}
+
+type Stat struct {
+	WonCount             int
+	Under40              int
+	Plus40               int
+	WinPercentage        float32
+	WinOver40Percentage  float32
+	WinUnder40Percentage float32
+}
+
+type PriceModel struct {
+	Name       string
+	HeadToHead float32
+	Under39    float32
+	Over40     float32
+}
+
+type FavPrices struct {
+	Favourite PriceModel
+	OtherTeam PriceModel
+}
+
+type MatchPrices struct {
+	HomeTeam  PriceModel
+	AwayTeam  PriceModel
+	MatchDate time.Time
+}
+
+type StakeModel struct {
+	HeadToHead float32
+	Under40    float32
+	Over40     float32
+}
+
+type MatchStatsPriceModel struct {
+
+	Stats           StatsModel
+	FavPrices       FavPrices
+	FavouriteStakes StakeModel
+	OtherTeamStakes StakeModel
+	Forecast        ForecastModel
 }
