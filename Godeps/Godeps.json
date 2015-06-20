@@ -16,7 +16,7 @@
 		},
 		{
 			"ImportPath": "github.com/brentonmcs/aflForecaster",
-			"Rev": "ef833d2a7c241f63fae92b036cb362f7afad8dbb"
+			"Rev": "02cb5a9a69ebefc64cc4dc3bd8c136801508ff2d"
 		},
 		{
 			"ImportPath": "golang.org/x/net/html",

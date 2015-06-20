@@ -40,7 +40,7 @@ func currentPrices(w http.ResponseWriter, r *http.Request) {
 
 func updateStats(w http.ResponseWriter, r *http.Request) {
 	AddHeaders(w)
-	sc
+	ScrapePages()
 	io.WriteString(w, string("Done"))
 }
 
