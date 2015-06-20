@@ -1,1 +1,1 @@
-web: aflforecaster
+web: aflForecasterRunner
