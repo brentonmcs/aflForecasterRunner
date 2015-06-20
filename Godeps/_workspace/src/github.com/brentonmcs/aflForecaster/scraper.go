@@ -1,9 +1,9 @@
 package AflForecaster
 
 import (
-	"log"
-	"github.com/PuerkitoBio/goquery"
+	"aflForecasterRunner/Godeps/_workspace/src/github.com/PuerkitoBio/goquery"
 	"fmt"
+	"log"
 	"strconv"
 	"strings"
 	"time"
@@ -16,9 +16,8 @@ func ScrapePages() {
 	baseUri := "http://footyforecaster.com/AFL/RoundForecast/%d_Round_%d"
 	if len(activeRounds) == 0 {
 		year, round := getCurrentRound()
-		scrapeResults(fmt.Sprintf(baseUri, year, round +1), round +1, year)
+		scrapeResults(fmt.Sprintf(baseUri, year, round+1), round+1, year)
 	}
-
 
 	scapeSportsBet()
 
@@ -53,12 +52,11 @@ func scapeSportsBet() {
 			homeTeam := parsePrices(buttons.First())
 			awayTeam := parsePrices(buttons.Last())
 
-			matchPrice := MatchPrices{HomeTeam:homeTeam, AwayTeam: awayTeam, MatchDate: currentDate}
+			matchPrice := MatchPrices{HomeTeam: homeTeam, AwayTeam: awayTeam, MatchDate: currentDate}
 			fmt.Println(matchPrice)
 			addPriceRecord(&matchPrice)
 		}
-	});
-
+	})
 
 }
 
@@ -75,10 +73,10 @@ func parsePrices(prices *goquery.Selection) PriceModel {
 	priceBox = priceBox.Next()
 	over40Price := priceBox.First().Find(".odd-val").Text()
 
-	return PriceModel{Name:headToHeadBox.Find(".team-name").Text(),
+	return PriceModel{Name: headToHeadBox.Find(".team-name").Text(),
 		HeadToHead: strToPrice(headToHeadPrice),
-		Under39: strToPrice(under40Price),
-		Over40: strToPrice(over40Price)}
+		Under39:    strToPrice(under40Price),
+		Over40:     strToPrice(over40Price)}
 }
 
 func strToPrice(strPrice string) float32 {
@@ -112,5 +110,3 @@ func scrapeResults(uri string, round, year int) {
 		AddForecast(&forecastModel)
 	})
 }
-
-
