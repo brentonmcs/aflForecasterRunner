@@ -218,7 +218,13 @@ func clearPrices() {
 }
 
 func connect() *mgo.Session {
-	session, err := mgo.Dial(os.Getenv("CUSTOMCONNSTR_MONGOLAB_URI"))
+
+	mongoConnectionString := os.Getenv("MONGOLAB_URI")
+	if mongoConnectionString == "" {
+		log.Fatal("Mongo Server not found")
+	}
+
+	session, err := mgo.Dial(mongoConnectionString)
 	if err != nil {
 		panic(err)
 	}
