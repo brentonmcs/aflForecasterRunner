@@ -1,9 +1,9 @@
 package main
 
-import(
-	"github.com/brentonmcs/aflForecaster"
+import (
+	"aflForecasterRunner/Godeps/_workspace/src/github.com/brentonmcs/aflForecaster"
 )
 
-func main() {	
+func main() {
 	AflForecaster.StartHttpServer()
 }
