@@ -1,0 +1,24 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;Forecaster&gt;">
+    <CLASSES>
+      <root url="file://$USER_HOME$/gocode/src/gopkg.in" />
+      <root url="file://$USER_HOME$/gocode/src/golang.org" />
+      <root url="file://$USER_HOME$/gocode/src/code.google.com" />
+      <root url="file://$USER_HOME$/gocode/src/.DS_Store" />
+      <root url="file://$USER_HOME$/gocode/src/github.com" />
+    </CLASSES>
+    <SOURCES />
+    <excluded>
+      <root url="file://$USER_HOME$/gocode/src/github.com/andybalholm/cascadia/.git" />
+      <root url="file://$USER_HOME$/gocode/src/golang.org/x/net/html/testdata" />
+      <root url="file://$USER_HOME$/gocode/src/github.com/PuerkitoBio/goquery/.git" />
+      <root url="file://$USER_HOME$/gocode/src/github.com/PuerkitoBio/goquery/testdata" />
+      <root url="file://$PROJECT_DIR$" />
+      <root url="file://$USER_HOME$/gocode/src/code.google.com/p/gomatrix/.hg" />
+      <root url="file://$USER_HOME$/gocode/src/golang.org/x/net/html/charset/testdata" />
+      <root url="file://$USER_HOME$/gocode/src/gopkg.in/mgo.v2/.git" />
+      <root url="file://$USER_HOME$/gocode/src/golang.org/x/net/.git" />
+      <root url="file://$USER_HOME$/gocode/src/github.com/brentonmcs/aflForecaster/.idea" />
+    </excluded>
+  </library>
+</component>
