@@ -10,10 +10,10 @@ import (
 
 func AddForecast(forecast *ForecastModel) {
 
-	session := connect()
+	session, db := connect()
 	defer session.Close()
 
-	c := session.DB("aflForecaster").C("forecast")
+	c := db.C("forecast")
 
 	index := mgo.Index{
 		Key:        []string{"Round", "WinTeam", "Year"},
@@ -37,10 +37,10 @@ func AddForecast(forecast *ForecastModel) {
 }
 
 func addPriceRecord(matchRecord *MatchPrices) {
-	session := connect()
+	session, db := connect()
 	defer session.Close()
 
-	c := session.DB("aflForecaster").C("prices")
+	c := db.C("prices")
 
 	err := c.Insert(&matchRecord)
 	if err != nil {
@@ -50,12 +50,12 @@ func addPriceRecord(matchRecord *MatchPrices) {
 }
 
 func GetCurrentRoundDetails() []ForecastModel {
-	session := connect()
+	session, db := connect()
 	defer session.Close()
 
 	year, round := getCurrentRound()
 
-	c := session.DB("aflForecaster").C("forecast")
+	c := db.C("forecast")
 	query := bson.M{"year": year, "round": round}
 
 	var result []ForecastModel
@@ -65,10 +65,10 @@ func GetCurrentRoundDetails() []ForecastModel {
 }
 
 func getCurrentRound() (int, int) {
-	session := connect()
+	session, db := connect()
 	defer session.Close()
 
-	c := session.DB("aflForecaster").C("forecast")
+	c := db.C("forecast")
 
 	var years, rounds []int
 	err := c.Find(nil).Sort("-year").Distinct("year", &years)
@@ -97,10 +97,10 @@ func getCurrentRound() (int, int) {
 }
 
 func removeYearRoundMatches(year, round int) {
-	session := connect()
+	session, db := connect()
 	defer session.Close()
 
-	c := session.DB("aflForecaster").C("forecast")
+	c := db.C("forecast")
 
 	query := bson.M{"year": year, "round": round}
 	info, err := c.RemoveAll(query)
@@ -114,10 +114,10 @@ func removeYearRoundMatches(year, round int) {
 }
 
 func getActiveRounds() []ActiveRound {
-	session := connect()
+	session, db := connect()
 	defer session.Close()
 
-	c := session.DB("aflForecaster").C("forecast")
+	c := db.C("forecast")
 
 	query := bson.M{"resultmodel.winteam": "", "round": bson.M{"$ne": 23}}
 
@@ -145,10 +145,10 @@ func getActiveRounds() []ActiveRound {
 }
 
 func groupMatchesByPoints() []AggregatePoints {
-	session := connect()
+	session, db := connect()
 	defer session.Close()
 
-	c := session.DB("aflForecaster").C("forecast")
+	c := db.C("forecast")
 
 	eqWon := bson.M{"$eq": []interface{}{"$resultmodel.won", true}}
 	eqLose := bson.M{"$eq": []interface{}{"$resultmodel.won", false}}
@@ -184,10 +184,10 @@ func getCurrentRoundPrices() []MatchPrices {
 	duration := time.Duration(time.Duration(daysTilSunday*24) * time.Hour)
 	currentDate := time.Now().Add(duration)
 
-	session := connect()
+	session, db := connect()
 	defer session.Close()
 
-	c := session.DB("aflForecaster").C("prices")
+	c := db.C("prices")
 
 	var result []MatchPrices
 	c.Find(bson.M{"matchdate": bson.M{"$lt": currentDate}}).All(&result)
@@ -195,10 +195,10 @@ func getCurrentRoundPrices() []MatchPrices {
 }
 
 func clearPrices() {
-	session := connect()
+	session, db := connect()
 	defer session.Close()
 
-	c := session.DB("aflForecaster").C("prices")
+	c := db.C("prices")
 
 	count, err := c.Count()
 
@@ -215,11 +215,16 @@ func clearPrices() {
 	}
 }
 
-func connect() *mgo.Session {
+func connect() (*mgo.Session, *mgo.Database) {
 
 	mongoConnectionString := os.Getenv("MONGOLAB_URI")
 	if mongoConnectionString == "" {
 		log.Fatal("Mongo Server not found")
+	}
+
+	mongoDb := os.Getenv("MONGOLAB_DB")
+	if mongoDb == "" {
+		log.Fatal("Mongo DB Server not found")
 	}
 
 	session, err := mgo.Dial(mongoConnectionString)
@@ -236,5 +241,6 @@ func connect() *mgo.Session {
 	}
 
 	session.SetMode(mgo.Monotonic, true)
-	return session
+
+	return session, session.DB(mongoDb)
 }
